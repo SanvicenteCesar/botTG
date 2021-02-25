@@ -17,20 +17,20 @@ app = Flask(__name__)
 def respond():
     #recuperar el mensaje en JSON y luego transformarlo en el objeto de Telegram
     update = telegram.Update.de_json(request.get_json(force=True), bot)
-    # get the chat_id to be able to respond to the same user
+    # obtener el chat_id para poder responder al mismo usuario
     chat_id= update.message.message_id
-    # get the message id to be able to reply to this specific message
+    # obtener la identificación del mensaje para poder responder a este mensaje específico
     msg_id = update.message.message_id
 
-    # Telegram understands UTF-8, so encode text for unicode compatibility
+    # Telegram entiende UTF-8, así que codifique texto para compatibilidad Unicode
     text = update.message.text.encode('utf-8').decode()
     print("got text message :", text)
 
-    # here we call our super AI
+    # aquí llamamos a nuestra súper IA
     response = get_response(text)
 
-    # now just send the message back
-    # notice how we specify the chat and the msg we reply to
+   # ahora solo envía el mensaje de vuelta
+    # observe cómo especificamos el chat y el mensaje al que respondemos
     bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
 
 return 'ok'
@@ -40,7 +40,7 @@ def set_webhook():
     # usamos el objeto bot para vincular el bot a nuestra aplicación que vive 
     # en el enlace provisto por URL
     s = bot.setwebhook ('{URL} {HOOK}'. format(URL = url, HOOK=TOKEN))
-    # something to let us know things work
+    # algo que nos haga saber que las cosas funcionan
     if s:
         return "webhook setup ok"
     else:
@@ -51,6 +51,6 @@ def index():
     return '.'
 
 if __name__ == '__main__':
-    # note the thereaded arg which allow
-    # your app to have more than one thread
+    # tenga en cuenta el argumento thereaded que permite
+    # que tu aplicación tenga más de un hilo
     app.run(threaded=True)
