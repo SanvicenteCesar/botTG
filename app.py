@@ -32,8 +32,7 @@ def respond():
    # ahora solo envía el mensaje de vuelta
     # observe cómo especificamos el chat y el mensaje al que respondemos
     bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
-
-return 'ok'
+    return 'ok'
 
 @app.route('/ setwebhook', methods = ['GET', 'POST'])
 def set_webhook():
